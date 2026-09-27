@@ -287,49 +287,32 @@ void ReverseList(Nodes* head)
     head->next = end;
 }
 
-// 合并两个已排序链表，返回新链表头节点
+// 合并两个已排序链表，返回新链表头节点（归并排序）
 Nodes* MergeSortedLists(Nodes* head1, Nodes* head2)
 {
-    // 合并两个带头节点的升序链表，结果放到 head1 并返回 head1
-    // 若其中一个头为空，则返回另一个头
-    if (head1 == NULL) return head2;
-    if (head2 == NULL) return head1;
+    Nodes dummy; // 任意的一个头节点
+    Nodes* tail = &dummy;
+    dummy.next = NULL;
 
-    Nodes* p1 = head1->next; // 第一个链表的第一个数据节点
-    Nodes* p2 = head2->next; // 第二个链表的第一个数据节点
-
-    // 以 head1 作为合并后的头节点，先断开原有的数据链
-    head1->next = NULL;
-    Nodes* tail = head1;
-
-    while (p1 != NULL && p2 != NULL)
+    while (head1 != NULL && head2 != NULL)
     {
-        if (p1->data <= p2->data)
+        if (head1->data <= head2->data)
         {
-            Nodes* next = p1->next;
-            tail->next = p1;
-            tail = p1;
-            p1 = next;
-            tail->next = NULL;
+            tail->next = head1;
+            head1 = head1->next;
         }
         else
         {
-            Nodes* next = p2->next;
-            tail->next = p2;
-            tail = p2;
-            p2 = next;
-            tail->next = NULL;
+            tail->next = head2;
+            head2 = head2->next;
         }
+        tail = tail->next;
     }
 
-    // 把剩余部分接上
-    if (p1 != NULL) tail->next = p1;
-    else tail->next = p2;
+    if (head1 != NULL) tail->next = head1;
+    else tail->next = head1;
 
-    // 释放第二个链表的头结点（数据节点已并入 head1）
-    free(head2);
-
-    return head1;
+    return dummy.next;
 }
 
 // 检查链表是否成环（适用于无头节点的纯指针检测，1 表示有环）
