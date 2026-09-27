@@ -3,6 +3,7 @@
 #include "dynamic_seqlist.h"
 #include "static_seqlist.h"
 #include "singly_linked_list.h"
+#include "array_stack.h"
 
 int main(void)
 {
@@ -72,6 +73,8 @@ int main(void)
     printf("长度: %d, 是否为空: %d, 是否为满: %d\n",
         Static_GetLength(&L2), Static_IsEmpty(&L2), Static_IsFull(&L2));
 
+    printf("----------------------------------------------------");
+
     /* ---------------- 单链表演示 ---------------- */
     printf("\n=== 单链表演示 ===\n");
 
@@ -128,6 +131,8 @@ int main(void)
         printf("销毁后 head == NULL ? %d\n", head == NULL);
     }
 
+    printf("----------------------------------------------------\n");
+
     // 合并两个已排序链表示例（带头节点，升序）
     Nodes* headA = InitList();
     Nodes* headB = InitList();
@@ -163,6 +168,8 @@ int main(void)
         if (headB) DestoryList(&headB);
     }
 
+    printf("----------------------------------------------------\n");
+
     // 构造有环链表并检测（示例：创建后形成环然后解除）
     Nodes* headCycle = InitList();
     if (headCycle) {
@@ -180,6 +187,54 @@ int main(void)
         tail->next = NULL;
         DestoryList(&headCycle);
     }
+
+    printf("----------------------------------------------------\n");
+
+    printf("=== 顺序栈演示 ===\n");
+
+    Stack1 stack;
+    int stackValue;
+
+    // 初始化栈
+    init_stack(&stack);
+    printf("初始化后是否为空：%d\n", is_empty(&stack));
+
+    // 入栈
+    push(&stack, 10);
+    push(&stack, 20);
+    push(&stack, 30);
+
+    printf("入栈后元素个数：%d\n", get_size(&stack));
+    printf("此时是否已满：%d\n", is_full(&stack));
+
+    // 查看栈顶元素，但不删除
+    if (peek(&stack, &stackValue))
+    {
+        printf("栈顶元素：%d\n", stackValue);
+    }
+
+    // 出栈
+    if (pop(&stack, &stackValue))
+    {
+        printf("出栈元素：%d\n", stackValue);
+    }
+
+    printf("出栈后元素个数：%d\n", get_size(&stack));
+
+    // 填满栈，演示 is_full
+    while (!is_full(&stack))
+    {
+        push(&stack, 100);
+    }
+
+    printf("填满后是否已满：%d\n", is_full(&stack));
+    printf("满栈后继续入栈是否成功：%d\n", push(&stack, 999));
+
+    // 销毁栈
+    destroy_stack(&stack);
+    printf("销毁后是否为空：%d\n", is_empty(&stack));
+
+    printf("\n");
 
     return 0;
 }

@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="src\array_stack.c" />
     <ClCompile Include="src\dynamic_seqlist.c" />
     <ClCompile Include="src\singly_linked_list.c" />
     <ClCompile Include="src\static_seqlist.c" />
@@ -148,9 +149,11 @@
   <ItemGroup>
     <ClInclude Include="include\dynamic_seqlist.h" />
     <ClInclude Include="include\static_seqlist.h" />
+    <ClInclude Include="array_stack.h" />
     <ClInclude Include="singly_linked_list.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".github\copilot-instructions.md" />
     <None Include=".gitignore" />
     <None Include="README.md" />
   </ItemGroup>
